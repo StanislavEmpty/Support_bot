@@ -12,8 +12,10 @@ mainMenu.hears(MAIN_COMMANDS.newticketcommand,  Scenes.Stage.enter("newticket"))
 mainMenu.on('message', async ctx => {
     if(ctx.message.text?.startsWith(MAIN_COMMANDS.start))
     {
-        await ctx.reply('HI');
-        return ctx.scene.enter('mainMenu');
+        if(ctx.chat.type === 'supergroup')
+            return ctx.scene.enter('adminChatMenu');
+        else
+            return ctx.scene.enter('mainMenu');
     }
     await ctx.reply("Я вас не понимаю!");
 });

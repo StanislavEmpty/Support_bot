@@ -1,5 +1,16 @@
 const { Markup } = require('telegraf')
-const { COMMANDS, MAIN_COMMANDS, TICKET_CATEGORY, TiCKET_CONTEXT } = require("../config/consts")
+
+const { ADMIN_MAIN_COMMANDS, 
+    COMMANDS,
+    MAIN_COMMANDS,
+    TICKET_CATEGORY,
+    TiCKET_CONTEXT,
+    TiCKET_ACCEPT } = require("../config/consts")
+
+const adminMainMenu = 
+    Markup.keyboard([
+        [ADMIN_MAIN_COMMANDS.start]
+    ]).resize();
 
 const mainMenu = 
     Markup.keyboard([
@@ -20,8 +31,16 @@ const contextTicketMenu =
         [COMMANDS.back]
     ]).resize();
 
+const acceptTicketMenu = 
+    Markup.keyboard([
+        [TiCKET_ACCEPT.send],
+        [COMMANDS.back]
+    ]).resize();
+
 module.exports = {
     mainMenu,
     newTicketMenu,
-    contextTicketMenu
+    contextTicketMenu,
+    adminMainMenu,
+    acceptTicketMenu
 }

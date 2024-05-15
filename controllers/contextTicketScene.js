@@ -1,6 +1,6 @@
 const { Scenes } = require("telegraf");
 const { contextTicketCommand } = require('./command')
-const { COMMANDS, MAIN_COMMANDS, TiCKET_CONTEXT } = require('../config/consts')
+const { COMMANDS, TiCKET_CONTEXT } = require('../config/consts')
 
 const contextTicket = new Scenes.BaseScene('contextTicket');
 contextTicket.enter(async ctx=>{
@@ -11,7 +11,7 @@ contextTicket.enter(async ctx=>{
 contextTicket.hears(COMMANDS.back, Scenes.Stage.enter('mainMenu'));
 contextTicket.hears(TiCKET_CONTEXT.send, async ctx=> {
     //send
-    console.log(ctx.session)
+    //console.log(ctx.session)
     if(!ctx.session.text){
         return await ctx.reply("Заполните хотя бы какое-то описание");
     }
@@ -21,13 +21,18 @@ contextTicket.hears(TiCKET_CONTEXT.send, async ctx=> {
     {
         await ctx.reply(`Описание: <i>${ctx.session.text}</i>`, { parse_mode:'HTML'})
     }
+    await SendPhotos(ctx);
+    ctx.scene.enter('acceptTicket');
+})
+
+async function SendPhotos(ctx) {
     ctx.session.photos.forEach(async photo => {
         await ctx.replyWithPhoto({url:photo.href}, {
             caption: `<i>${photo.caption}</i>`,
             parse_mode:'HTML'
         })
     });
-})
+}
 
 contextTicket.on('text', async ctx=> {
     if(ctx.message.text.startsWith('/'))
@@ -41,6 +46,7 @@ contextTicket.on('photo', async ctx=>{
             href:(await ctx.telegram.getFileLink(photo)).href,
             caption: ctx.message.caption ? ctx.message.caption : ''
         });
+        //https://api.telegram.org/file/bot6305185679:AAGixm9BYL-ith4qS4VHwf2TYbLXKaPdMPM/photos/file_8.jpg
   })
   
 module.exports={

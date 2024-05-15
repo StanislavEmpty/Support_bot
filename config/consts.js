@@ -1,5 +1,9 @@
 // Текстовые комманды
 
+const ADMIN_MAIN_COMMANDS= {
+    start: "/start"
+}
+
 const MAIN_COMMANDS= {
     start: "/start",
     newticket: "Новое обращение",
@@ -16,6 +20,10 @@ const TiCKET_CONTEXT = {
     send: "Отправить обращение"
 }
 
+const TiCKET_ACCEPT = {
+    send: "Да, все верно"
+}
+
 const COMMANDS = {
     //back: "В главное меню"
     back: "Отмена"
@@ -25,5 +33,7 @@ module.exports = {
     TICKET_CATEGORY,
     TiCKET_CONTEXT,
     MAIN_COMMANDS,
-    COMMANDS
+    COMMANDS,
+    ADMIN_MAIN_COMMANDS,
+    TiCKET_ACCEPT
 }
